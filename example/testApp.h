@@ -6,7 +6,7 @@ class testApp : public ofBaseApp{
 
 public:
 	void setup();
-	void update(){};
+	void update();
 	void draw();
 
 	ofxFboMipMap myFBO;
