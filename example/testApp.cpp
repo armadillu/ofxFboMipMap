@@ -9,8 +9,6 @@ void testApp::setup(){
 	//load an img
 	ofLoadImage(myTex, "benottoAlpha.png");
 
-	glHint(GL_GENERATE_MIPMAP_HINT, GL_FASTEST); //tune performance here! mipmaps can be slow
-
 	ofFbo::Settings s;
 	s.width = myTex.getWidth();
 	s.height = myTex.getHeight();
@@ -24,11 +22,18 @@ void testApp::setup(){
 
 
 	//alloc with mipmaps
-	myFBO.allocateWithMipMaps(s);
-	//myFBO.allocate(s);
+	myFBO.allocateWithMipMaps(s);	//yes mipmaps
+	//myFBO.allocate(s);			//no mipmaps
 
+	//hint quality
+	glHint(GL_GENERATE_MIPMAP_HINT, GL_FASTEST); //tune performance here! generating mipmaps is slow
+
+	//get max anisotropic filtering value, apply it to our mipmap
 	glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &maxAnisotropy);
 	cout << "GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT : " << maxAnisotropy << endl;
+	myFBO.getTextureReference().bind();
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, maxAnisotropy);
+	myFBO.getTextureReference().unbind();
 
 }
 
@@ -46,9 +51,6 @@ void testApp::update(){
 
 	//makes the mipmaps look much sharper in extreme shrink / perspective cases
 	//you should check for extensions yada yada
-	myFBO.getTextureReference().bind();
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, maxAnisotropy);
-	myFBO.getTextureReference().unbind();
 
 }
 
