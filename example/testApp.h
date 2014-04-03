@@ -11,4 +11,6 @@ public:
 
 	ofxFboMipMap myFBO;
 	ofTexture myTex;
+
+	float maxAnisotropy;
 };

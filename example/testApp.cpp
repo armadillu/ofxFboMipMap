@@ -25,23 +25,30 @@ void testApp::setup(){
 
 	//alloc with mipmaps
 	myFBO.allocateWithMipMaps(s);
+	//myFBO.allocate(s);
+
+	glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &maxAnisotropy);
+	cout << "GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT : " << maxAnisotropy << endl;
 
 }
 
 void testApp::update(){
 
-	if(ofGetFrameNum()%2 == 1){
+	//draw something inside the fbo
+	myFBO.begin();
+		ofClear(0, 0, 0, 0);
+		ofSetColor(255);
+		myTex.draw(0,0);
+		ofScale(10, 10);
+		ofSetColor(0);
+		ofDrawBitmapString("frame: " + ofToString(ofGetFrameNum()), 20,20);
+	myFBO.end();
 
-		//draw something inside the fbo
-		myFBO.begin();
-			ofClear(0, 0, 0, 0);
-			ofSetColor(255);
-			myTex.draw(0,0);
-			ofScale(10, 10);
-			ofSetColor(0);
-			ofDrawBitmapString("frame: " + ofToString(ofGetFrameNum()), 20,20);
-		myFBO.end();
-	}
+	//makes the mipmaps look much sharper in extreme shrink / perspective cases
+	//you should check for extensions yada yada
+	myFBO.getTextureReference().bind();
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, maxAnisotropy);
+	myFBO.getTextureReference().unbind();
 
 }
 
