@@ -33,7 +33,10 @@ public:
 			ofLog(OF_LOG_WARNING, "ofxFboMipMap >> allocating fbo with minFilter not set to GL_LINEAR_MIPMAP_LINEAR?? Are you sure?");
 		}
 
+		ofLogLevel l = ofGetLogLevel();
+		ofSetLogLevel(OF_LOG_FATAL_ERROR); //shush fbo creation warnings
 		ofFbo::allocate(s);
+		ofSetLogLevel(l);
 		ofFbo::getTextureReference().setCompression(OF_COMPRESS_MIPMAPS);
 
 		if(reEnableARB){
