@@ -34,7 +34,7 @@ public:
 		}
 
 		ofLogLevel l = ofGetLogLevel();
-		ofSetLogLevel(OF_LOG_FATAL_ERROR); //shush fbo creation warnings
+		ofSetLogLevel(OF_LOG_SILENT); //shush fbo creation verbose 
 		ofFbo::allocate(s);
 		ofSetLogLevel(l);
 		ofFbo::getTextureReference().setCompression(OF_COMPRESS_MIPMAPS);
