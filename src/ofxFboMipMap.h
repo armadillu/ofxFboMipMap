@@ -37,7 +37,7 @@ public:
 		ofSetLogLevel(OF_LOG_SILENT); //shush fbo creation verbose 
 		ofFbo::allocate(s);
 		ofSetLogLevel(l);
-		ofFbo::getTextureReference().setCompression(OF_COMPRESS_MIPMAPS);
+		//ofFbo::getTextureReference().setCompression(OF_COMPRESS_MIPMAPS);
 
 		if(reEnableARB){
 			ofEnableArbTex();
@@ -52,7 +52,7 @@ public:
 
 		//update the mipmap afterwards
 		getTextureReference().bind();
-		glGenerateMipmap(ofFbo::getTextureReference().texData.textureTarget);
+			glGenerateMipmap(ofFbo::getTextureReference().texData.textureTarget);
 		getTextureReference().unbind();
 	}
 };
