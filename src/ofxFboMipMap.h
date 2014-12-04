@@ -44,6 +44,11 @@ public:
 		}
 	};
 
+	void setMipMapBias(float bias){
+		getTextureReference().bind();
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_LOD_BIAS, bias);
+		getTextureReference().unbind();
+	}
 
 	void end(){ //this updates the mipmaps!
 
